@@ -83,22 +83,17 @@ y_start_stop = [400, 720]  # Min and max in y to search in slide_window()
 
 ```
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+I tried various combinations of parameters and before I settle down with te above set of params. I used the test accuracy score with different combinations of the parameters to decide on the final params. Below is the details of the model I trained.  
 
+In Code cell 22 I created the featurs for Cars and notcars seperately and saved them in car_features and notcar_features lists. I then shuffle them before I use training test splis to create Training and test sets in code cell 24. The Training set contains 14208 and test se contains 3552.
 
-![alt text][image2]
+I trained a linear SVM using the training set and I got the test accuracy of 98.96.
 
-####2. Explain how you settled on your final choice of HOG parameters.
+13.73 Seconds to train SVC...
+Test Accuracy of SVC =  0.9896
 
-I tried various combinations of parameters and...
-
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
-
-I trained a linear SVM using...
-
-###Sliding Window Search
+#### Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
