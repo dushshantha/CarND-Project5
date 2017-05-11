@@ -41,7 +41,7 @@ In code cell 4, I am printing out few examples of each class of images.
 
 I use the proided test images ( in ./test_images folder) to tet out my pipeline. Below is an exampe of one of those images. 
 
-./images/2.PNG
+![alt text][image2]
 
 ### Histogram of Oriented Gradients (HOG)
 
