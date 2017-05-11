@@ -43,15 +43,45 @@ I use the proided test images ( in ./test_images folder) to tet out my pipeline.
 
 ![alt text][image2]
 
-### Histogram of Oriented Gradients (HOG)
+### Feature extraction
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+In the next few code cells, I use few methods to extract few different types of features for the training image to train the model on.
+* Spacial Binning
+* Color Histogram
+* HOG features
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+#### Spacial Binning
+Code cell 16 implements the function bin_spatial() that returns a collection of features created by performingthe spacial binning of the image. This function accepts the color space and size of the image tobe resized as parameters and return a flattened array of features. 
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+#### Color Histogram features
 
-![alt text][image1]
+Code cell 17 implements the function color_hist() that returns color histogram features of the image. 
+
+#### Histogram of Oriented Gradients (HOG)
+
+Code cell 18 implments the function get_hog_features() to extract the HOG featurs of the image. This function accpepts parameters such as orient, pixels per cell and cells per block and utilizes skimage.feature.hog class to extract the HOG features. Below example shows the HOG representation of a car and a non car image.
+
+![alt text][image3]
+
+#### Putting all that together
+
+In the code cell 20, I put all the feature together in the extract_features() function. Here, I get the list of images (cars or notcars) and a color space for Spacial binning and color histogram and the params for HOG mentioned above. The function will perform all the feature extraction methods explained in the previous secions and return a concatenated list of features in the form of a flattened array for training the model. Below are the list pf parameters I used in my final model after expriementing with many different combinations. (Code cell 22)
+
+```python
+
+color_space = 'YUV'  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+orient = 9  # HOG orientations
+pix_per_cell = 8  # HOG pixels per cell
+cell_per_block = 2  # HOG cells per block
+hog_channel = "ALL"  # Can be 0, 1, 2, or "ALL"
+spatial_size = (16, 16)  # Spatial binning dimensions
+hist_bins = 16  # Number of histogram bins
+spatial_feat = True  # Spatial features on or off
+hist_feat = True  # Histogram features on or off
+hog_feat = True  # HOG features on or off
+y_start_stop = [400, 720]  # Min and max in y to search in slide_window()
+
+```
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
