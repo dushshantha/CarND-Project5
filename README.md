@@ -10,7 +10,7 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
+[image1]: ./images/1.png
 [image2]: ./examples/HOG_example.jpg
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
@@ -25,11 +25,19 @@ The goals / steps of this project are the following:
 ---
 ### Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+This README wals you through the process I followed to complete this project. The code is in the form of a ipyhon notebook called Vehicle Detection And Tracking.ipynb in this repository.
 
-You're reading it!
+### Data exploration and preparation
 
-###Histogram of Oriented Gradients (HOG)
+In the first 4 code cells of the notebook I am getting ready for the implementation by importing all the necessary python packages, helper functions and little bit of data exploration. I am using sklearn packages for the machine learning portion of the project. I am using Support Vector Machines for this. 
+
+I use the provided Car and Non Car images as my test data. In code cell 3, I am loading the list of test data in to 2 lists called cars and notcars. It seems to be a pretty balanced data set with 8968 notcars and 8792 cars. 
+
+In code cell 4, I am printing out few examples of each class of images. 
+
+![alt text][image1]
+
+### Histogram of Oriented Gradients (HOG)
 
 ####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
