@@ -13,8 +13,8 @@ The goals / steps of this project are the following:
 [image1]: ./images/1.PNG
 [image2]: ./images/2.PNG
 [image3]: ./images/3.PNG
-[image4]: ./images/4.PNG
-[image5]: ./images/5.PNG
+[image4]: ./images/4.png
+[image5]: ./images/5.png
 [image6]: ./images/3.PNG
 [image7]: ./images/3.PNG
 [video1]: ./project_video.mp4
