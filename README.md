@@ -17,7 +17,8 @@ The goals / steps of this project are the following:
 [image5]: ./images/5.png
 [image6]: ./images/3.PNG
 [image7]: ./images/3.PNG
-[video1]: ./project_video.mp4
+[video1]: ./test_video_out.mp4
+[video1]: ./test_video_out_smooth.mp4
 
 #### [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ##### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -96,7 +97,7 @@ Test Accuracy of SVC =  0.9896
 #### Sliding Window Search
 
 In the code cell x I adapted find_cars() function from the lesson to perform the Sliding window search in a given section of the image to look for cars. This function performs a HOG feature extraction from the entire image once and the sliding window in a given section of the image to detect cars. I also agregate Spacial binning and Color Histogram feature extraction for each window. This function returns the rectangles that are classified to be possibles cars and an image with these rectangles drawn on the original image just for debug purposes.
-I then use drawFinal() function that applies heatmap function and then I apply a labeling to the heatmap to identify individual cars in the image. 
+I then use drawFinal() function that applies heatmap function and then I apply a labeling to the heatmap to identify individual cars in the image. The Heatmap helps me to identify the locations of the cars on the screen ad then I apply a threshold to remove false possitives from the images to get the bounding boxes. I then apply labelling function to create the bounding boxes which helps me get rid multiple detections. 
 
 Below example images show the transformation applied to a test image.
 
@@ -104,33 +105,46 @@ Below example images show the transformation applied to a test image.
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+I the created a function called process_image() in code cell 23 to perform the above mentioned pipeline on all the frames of the image.  In this I run the find_cars() function 3 times with differnt segments of the image with different scales to capture cars in different distances and agregate the rectangles before applying the heatmap. 
 
+```python
+    ystart = 400
+    ystop = 720
+    scale = 1.6
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+    draw_image, boxes = find_cars(image, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins)
+    rects.append(boxes)
+    
+    ystart = 400
+    ystop = 720
+    scale = 1.6
+    
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+    draw_image, boxes = find_cars(image, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins)
+    rects.append(boxes)
+    
+    ystart = 400
+    ystop = 490
+    scale = .8
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+    draw_image, boxes = find_cars(image, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins)
+    rects.append(boxes)
+```
 
-### Here are six frames and their corresponding heatmaps:
+[Here](./test_video_out.mp4)'s the link to my first try on the test video.
 
-![alt text][image5]
+You notice that the bounding boxes in this video is little shaky. So I created a Class called Detections in code cell 27 to save the last 20 boxes and use it to average out the results. 
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+[Here](./test_video_out_smooth.mp4)'s the video after smoothing it out.
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+Finally I created find_cars_v2() and process_image_v2 functions to include the smoothing functions and then applied it to the final project video. [Here]()'s the final project video. 
 
 
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+I still see some shakyness in the final video. I fied few things to get rid of this by getting the numpy.mean on last few iterationsof the frames. Here's a link to one of those test videos. Although I was able achieve better smoothness with this, I faces few issues when it came to the final project Video. The mean function works best when all the arrays are equal in size. But in this case, when there are new vehicles come into the frame number of rectangles were different from previous iterations. I implemented a way to handle this but it introduced inefficiency to the algorythm so I removed that from the project submission. This can be explored more and achieve greater levels of smoothness to the detections, given more time.
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
+I still see few false positives in the final video. This can be reduced by using multiple models trained on differnt cobmibations of params as an ensemble and combining the resulting rectangles and then apply heatmap and threshold on them.  
