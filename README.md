@@ -13,10 +13,10 @@ The goals / steps of this project are the following:
 [image1]: ./images/1.PNG
 [image2]: ./images/2.PNG
 [image3]: ./images/3.PNG
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
+[image4]: ./images/4.PNG
+[image5]: ./images/5.PNG
+[image6]: ./images/3.PNG
+[image7]: ./images/3.PNG
 [video1]: ./project_video.mp4
 
 #### [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -95,18 +95,12 @@ Test Accuracy of SVC =  0.9896
 
 #### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+In the code cell x I adapted find_cars() function from the lesson to perform the Sliding window search in a given section of the image to look for cars. This function performs a HOG feature extraction from the entire image once and the sliding window in a given section of the image to detect cars. I also agregate Spacial binning and Color Histogram feature extraction for each window. This function returns the rectangles that are classified to be possibles cars and an image with these rectangles drawn on the original image just for debug purposes.
+I then use drawFinal() function that applies heatmap function and then I apply a labeling to the heatmap to identify individual cars in the image. 
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+Below example images show the transformation applied to a test image.
 
-![alt text][image3]
-
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
-
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
-
-![alt text][image4]
----
+![alt text][image4] | ![alt text][image5]
 
 ### Video Implementation
 
