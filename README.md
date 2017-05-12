@@ -131,13 +131,13 @@ I the created a function called process_image() in code cell 23 to perform the a
     rects.append(boxes)
 ```
 
-[Here](./test_video_out.mp4)'s the link to my first try on the test video.
+[Here](https://www.youtube.com/watch?v=fRDydawNk3I)'s the link to my first try on the test video.
 
 You notice that the bounding boxes in this video is little shaky. So I created a Class called Detections in code cell 27 to save the last 20 boxes and use it to average out the results. 
 
-[Here](./test_video_out_smooth.mp4)'s the video after smoothing it out.
+[Here](https://www.youtube.com/watch?v=8W40kf9Ss08)'s the video after smoothing it out.
 
-Finally I created find_cars_v2() and process_image_v2 functions to include the smoothing functions and then applied it to the final project video. [Here]()'s the final project video. 
+Finally I created find_cars_v2() and process_image_v2 functions to include the smoothing functions and then applied it to the final project video. [Here](https://www.youtube.com/watch?v=doNxJrfpXCY)'s the final project video. 
 
 
 
@@ -145,6 +145,6 @@ Finally I created find_cars_v2() and process_image_v2 functions to include the s
 
 ### Discussion
 
-I still see some shakyness in the final video. I fied few things to get rid of this by getting the numpy.mean on last few iterationsof the frames. Here's a link to one of those test videos. Although I was able achieve better smoothness with this, I faces few issues when it came to the final project Video. The mean function works best when all the arrays are equal in size. But in this case, when there are new vehicles come into the frame number of rectangles were different from previous iterations. I implemented a way to handle this but it introduced inefficiency to the algorythm so I removed that from the project submission. This can be explored more and achieve greater levels of smoothness to the detections, given more time.
+I still see some shakyness in the final video. I fied few things to get rid of this by getting the numpy.mean on last few iterations of the frames. [Here](https://www.youtube.com/watch?v=LfxJ-G23zXc)'s a link to one of those test videos. Although I was able achieve better smoothness with this, I faces few issues when it came to the final project Video. The mean function works best when all the arrays are equal in size. But in this case, when there are new vehicles come into the frame number of rectangles were different from previous iterations. I implemented a way to handle this but it introduced inefficiency to the algorythm so I removed that from the project submission. This can be explored more and achieve greater levels of smoothness to the detections, given more time.
 
 I still see few false positives in the final video. This can be reduced by using multiple models trained on differnt cobmibations of params as an ensemble and combining the resulting rectangles and then apply heatmap and threshold on them.  
